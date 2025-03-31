@@ -1,53 +1,43 @@
 import random
 
 def hangman():
-    print("Добро пожаловать в Виселицу.")
+    print("Welcome to Hangman!")
 
-    wordlist = ['мандарин', 'яблоко', 'груша', 'виноград', 'апельсин', 'манго', 'гриб', 'микрофон', 'проект', 'монитор', 'крест', 'страх']
+    wordlist = ['tangerine', 'apple', 'pear', 'grape', 'orange', 'mango', 'mushroom', 'microphone', 'project', 'monitor', 'cross', 'fear']
     secret = random.choice(wordlist)
     guesses = ''
-    turns = 5
+    attempts = 5
 
-    while turns > 0:
+    while attempts > 0:
         missed = 0
         for letter in secret:
             if letter in guesses:
-                print(letter, end=' ')
+                print(letter, end='')
             else:
                 print('_', end=' ')
-                missed += 1
-        print()
-
+        missed += 1
         if missed == 0:
-            print("Ты выиграл!!!")
-            return
-        
-        guess = input("Напиши букву: ").lower()
-
-        if len(guess) != 1 or not guess.isalpha():
-            print("Пожалуйста, вводи только одну букву!")
-            continue
-
-        if guess in guesses:
-            print("Ты уже называл эту букву.")
-            continue
-
+            print("You won!!!")
+            break
+        guess = input("Enter a letter: ")
         guesses += guess
-
         if guess not in secret:
-            turns -= 1
-            print("Не угадал.")
-            print(f"Осталось {turns} попыток")
-            if turns < 5: print("  | ")
-            if turns < 4: print("  O ")
-            if turns < 3: print(" /|\\ ")
-            if turns < 2: print("  | ")
-            if turns < 1: print(" / \\ ")
-    print(f"Ты проиграл! Загаданное слово было: {secret}")
+            attempts -= 1
+            print("Wrong guess.")
+            print(f"Attempts left: {attempts}")
+            if attempts < 5: print('  | ')
+            if attempts < 4: print('  O ')
+            if attempts < 3: print(' /|\ ')
+            if attempts < 2: print('  | ')
+            if attempts < 1: print(' / \ ')
+        if attempts == 0:
+            print("You lost!")
 
-while True:
+answer = "yes"
+while answer.lower() == 'yes':
     hangman()
-    ans = input("Хочешь сыграть снова? (да или нет): ").strip().lower()
-    if ans != 'да':
-        print("Спасибо за игру!")
+    ans = input("Do you want to play again? (yes or no)").strip().lower()
+    if ans != 'yes':
+        print("Thanks for game.")
         break
+    
